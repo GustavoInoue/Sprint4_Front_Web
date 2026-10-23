@@ -27,9 +27,7 @@ export default function Team() {
           {MEMBERS.map((m, i) => (
             <Reveal as="article" key={m.name} delay={i * 80} className="grid content-start gap-5">
               <div className="group relative aspect-[.82] overflow-hidden rounded-3xl bg-[#ddd9d1]">
-                <img src={`/assets/${m.photo}.webp`} alt={m.alt} loading="lazy" className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-105" />
-                <span className="absolute left-4 top-4 rounded-full bg-ink/70 px-2 py-0.5 text-[0.62rem] text-white backdrop-blur">0{i + 1}</span>
-              </div>
+                <img src={`/assets/${m.photo}.webp`} alt={m.alt} loading="lazy" className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-105" />              </div>
               <div className="px-1.5">
                 <p className="text-[0.6rem] font-extrabold uppercase tracking-widest text-violet">{m.role}</p>
                 <h3 className="my-2 text-xl">{m.name}</h3>
