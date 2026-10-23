@@ -2,7 +2,7 @@ import Em from '../components/ui/Em'
 
 export default function AuthShell({ title, accent, subtitle, children, footer }) {
   return (
-    <section className="grid-bg relative flex min-h-screen items-center overflow-hidden pb-16 pt-32">
+    <section className="grid-bg relative flex min-h-dvh items-center overflow-hidden pb-16 pt-32">
       <div className="pointer-events-none absolute -right-40 top-10 size-[600px] rounded-full bg-violet/20 blur-3xl" aria-hidden="true" />
       <div className="relative mx-auto grid w-[min(1080px,calc(100%-32px))] items-center gap-12 lg:grid-cols-2">
         <div className="hidden lg:block">

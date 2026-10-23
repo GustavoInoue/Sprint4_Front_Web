@@ -43,7 +43,7 @@ export default function AccessibilityMenu() {
   }, [open])
 
   return (
-    <div className="relative" ref={box}>
+    <div className="sm:relative" ref={box}>
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
@@ -55,7 +55,8 @@ export default function AccessibilityMenu() {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full z-50 mt-3 w-72 animate-pop rounded-2xl border border-line bg-[#0d0c14] p-3 shadow-2xl">
+        // No celular o painel ocupa a largura da tela (ancorado no cabeçalho); a partir de sm fica junto ao botão.
+        <div className="absolute inset-x-4 top-full z-50 mt-3 animate-pop rounded-2xl border border-line bg-[#0d0c14] p-3 shadow-2xl sm:inset-x-auto sm:right-0 sm:w-72">
           <p className="px-3 pb-2 pt-1 text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-violet-bright">
             Acessibilidade
           </p>

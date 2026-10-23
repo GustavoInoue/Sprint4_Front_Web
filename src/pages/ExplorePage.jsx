@@ -19,7 +19,7 @@ export default function ExplorePage() {
   }
 
   return (
-    <section className="grid-bg min-h-screen pb-24 pt-32 lg:pt-40">
+    <section className="grid-bg min-h-dvh pb-24 pt-32 lg:pt-40">
       <div className="mx-auto w-[min(1080px,calc(100%-32px))]">
         <p className="eyebrow">Explorar temas</p>
         <h1 className="max-w-[780px] text-[clamp(2.8rem,6vw,5.4rem)] font-semibold">

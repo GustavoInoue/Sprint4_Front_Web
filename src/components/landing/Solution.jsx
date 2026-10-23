@@ -39,13 +39,13 @@ export default function Solution() {
             </ul>
           </article>
 
-          <div className="relative min-h-[560px] overflow-hidden bg-[radial-gradient(circle_at_48%_45%,rgba(109,86,246,.4),transparent_38%),linear-gradient(135deg,#201947,#0d0d14_70%)]">
+          <div className="relative min-h-[640px] overflow-hidden sm:min-h-[680px] lg:min-h-0 bg-[radial-gradient(circle_at_48%_45%,rgba(109,86,246,.4),transparent_38%),linear-gradient(135deg,#201947,#0d0d14_70%)]">
             <Phone
               src="/assets/screens/capture-hq.webp"
               alt="Câmera do CodeCam capturando o conteúdo da lousa"
-              className="absolute left-1/2 top-[55%] z-[2] h-[430px] w-[199px] -translate-x-1/2 -translate-y-1/2 -rotate-[4deg] sm:h-[574px] sm:w-[265px]"
+              className="absolute left-1/2 top-[50%] z-[2] h-[430px] w-[199px] -translate-x-1/2 -translate-y-1/2 -rotate-[4deg] sm:h-[500px] sm:w-[231px] lg:top-[55%] lg:h-[574px] lg:w-[265px]"
             />
-            <div className="absolute left-1/2 top-[49%] z-[4] h-[260px] w-[min(330px,80%)] -translate-x-1/2 -translate-y-1/2" aria-hidden="true">
+            <div className="absolute left-1/2 top-[45%] z-[4] h-[260px] w-[min(330px,80%)] -translate-x-1/2 -translate-y-1/2 lg:top-[49%]" aria-hidden="true">
               <i className={`${corner} left-0 top-0 border-l-2 border-t-2`} />
               <i className={`${corner} right-0 top-0 border-r-2 border-t-2`} />
               <i className={`${corner} bottom-0 right-0 border-b-2 border-r-2`} />

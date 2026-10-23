@@ -17,7 +17,7 @@ export default function AccessibilitySection() {
           </h2>
           <p className="my-7 max-w-[520px] text-white/75">
             Recursos de personalização ajudam diferentes estudantes a acessar o conteúdo com mais conforto, legibilidade e
-            independência. <strong className="text-white">Teste ao lado — os ajustes valem para o site inteiro.</strong>
+            independência. <strong className="text-white">Teste aqui — os ajustes valem para o site inteiro.</strong>
           </p>
           <ul className="flex flex-wrap gap-2">
             {TAGS.map((t) => (
@@ -26,14 +26,15 @@ export default function AccessibilitySection() {
           </ul>
         </Reveal>
 
-        <Reveal delay={100} className="relative mx-auto min-h-[560px] w-full max-w-[650px]">
+        {/* Celular: telefone e cartão empilhados (sem sobreposição). A partir de sm: sobrepostos, como no desktop. */}
+        <Reveal delay={100} className="relative mx-auto grid w-full max-w-[650px] justify-items-center gap-8 sm:block sm:min-h-[560px]">
           <Phone
             src="/assets/screens/accessibility-hq.webp"
             alt="Tela de ajustes de acessibilidade do CodeCam"
-            className="absolute left-2 top-1/2 z-[2] h-[430px] w-[199px] -translate-y-1/2 -rotate-[5deg] bg-[#0b0b0f] sm:left-9 sm:h-[524px] sm:w-[242px]"
+            className="relative z-[2] h-[430px] w-[199px] -rotate-[5deg] bg-[#0b0b0f] sm:absolute sm:left-9 sm:top-1/2 sm:h-[524px] sm:w-[242px] sm:-translate-y-1/2"
             imgClassName="!object-contain"
           />
-          <div className="absolute right-0 top-1/2 z-[3] w-[min(330px,66%)] -translate-y-[42%] rounded-[25px] border border-white/15 bg-[#0d0c14]/90 p-6 shadow-phone backdrop-blur-xl">
+          <div className="relative z-[3] w-full rounded-[25px] border border-white/15 bg-[#0d0c14]/90 p-6 shadow-phone backdrop-blur-xl sm:absolute sm:right-0 sm:top-1/2 sm:w-[min(330px,66%)] sm:-translate-y-[42%]">
             <div className="flex min-h-14 items-center justify-between text-[0.72rem]">
               <span>Contraste</span>
               <button

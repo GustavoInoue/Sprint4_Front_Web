@@ -9,7 +9,7 @@ export default function Hero() {
   const { user } = useAuth()
 
   return (
-    <section id="inicio" className="grid-bg relative min-h-screen overflow-hidden pt-32 lg:pt-[152px]" aria-labelledby="hero-title">
+    <section id="inicio" className="grid-bg relative min-h-dvh overflow-hidden pt-32 lg:pt-[152px]" aria-labelledby="hero-title">
       <div className="pointer-events-none absolute -right-40 top-12 size-[700px] rounded-full bg-[radial-gradient(circle,rgba(109,86,246,.23),rgba(109,86,246,.06)_35%,transparent_68%)] blur-md" aria-hidden="true" />
 
       <div className="relative mx-auto grid w-[min(1180px,calc(100%-32px))] items-center gap-10 lg:min-h-[610px] lg:grid-cols-[.92fr_1.08fr]">
@@ -45,7 +45,7 @@ export default function Hero() {
           <Phone
             src="/assets/screens/summary-hq.webp"
             alt="Resumo gerado pelo CodeCam"
-            className="absolute right-0 top-20 z-[2] h-[300px] w-[140px] rotate-[11deg] brightness-75 sm:h-[424px] sm:w-[196px]"
+            className="absolute right-4 top-20 z-[2] h-[300px] w-[140px] rotate-[11deg] brightness-75 sm:right-0 sm:h-[424px] sm:w-[196px]"
           />
           <Phone
             src="/assets/screens/capture-hq.webp"

@@ -3,7 +3,7 @@ import Em from '../components/ui/Em'
 
 export default function NotFoundPage() {
   return (
-    <section className="grid-bg grid min-h-screen place-items-center px-6 text-center">
+    <section className="grid-bg grid min-h-dvh place-items-center px-6 text-center">
       <div>
         <p className="eyebrow justify-center">Erro 404</p>
         <h1 className="text-[clamp(4rem,12vw,9rem)] font-bold">Página <Em>perdida.</Em></h1>

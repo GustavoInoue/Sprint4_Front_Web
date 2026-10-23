@@ -27,7 +27,7 @@ export default function AppLayout() {
   }
 
   return (
-    <div className="grid-bg min-h-screen pb-24 md:pb-0">
+    <div className="grid-bg min-h-dvh pb-24 md:pb-0">
       <header className="sticky top-0 z-40 border-b border-white/[0.08] bg-ink/85 backdrop-blur-xl">
         <div className="mx-auto flex h-16 w-[min(1180px,calc(100%-32px))] items-center justify-between gap-4">
           <Logo to="/app" />
