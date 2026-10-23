@@ -36,7 +36,7 @@ export default function TrySection() {
               value={topic}
               onChange={(e) => setTopic(e.target.value)}
             />
-            <button type="submit" className="btn btn-lime">Explorar tema →</button>
+            <button type="submit" className="btn btn-primary">Explorar tema →</button>
           </form>
           <ul className="relative mt-6 flex flex-wrap gap-2" aria-label="Sugestões de temas">
             {SUGGESTIONS.map((s) => (

@@ -29,7 +29,7 @@ export default function DashboardPage() {
             {greeting()}, <Em>{user.name.split(' ')[0]}.</Em>
           </h1>
         </div>
-        <Link to="/gerar" className="btn btn-lime">Gerar novo conteúdo →</Link>
+        <Link to="/gerar" className="btn btn-primary">Gerar novo conteúdo →</Link>
       </header>
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
