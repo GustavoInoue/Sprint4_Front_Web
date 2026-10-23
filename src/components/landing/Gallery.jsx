@@ -70,11 +70,6 @@ export default function Gallery() {
                   className={`absolute inset-0 transition duration-700 ${i === index ? 'scale-100 opacity-100' : 'scale-[.97] opacity-0'}`}
                 >
                   <img src={`/assets/screens/gallery-${s.key}-hq.webp`} alt={s.alt} loading="lazy" className="h-full w-full object-cover" />
-                  <figcaption className="absolute inset-x-3.5 bottom-4 z-[3] grid grid-cols-[auto_1fr] gap-x-2 rounded-xl border border-white/[0.13] bg-ink/85 p-3 backdrop-blur-md">
-                    <span className="row-span-2 text-[0.62rem] font-extrabold text-violet-bright">0{i + 1}</span>
-                    <strong className="text-xs">{s.title}</strong>
-                    <small className="text-[0.57rem] text-[#888490]">{s.sub}</small>
-                  </figcaption>
                 </figure>
               ))}
             </div>
