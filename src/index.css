@@ -97,7 +97,6 @@
   .btn-primary { @apply bg-violet text-white shadow-glow hover:bg-violet-bright; }
   .btn-light { @apply bg-white text-ink hover:bg-lavender; }
   .btn-ghost { @apply border border-line bg-transparent text-white hover:border-violet-bright hover:bg-violet/15; }
-  .btn-lime { @apply bg-lime text-ink hover:brightness-95; }
 
   .eyebrow {
     @apply mb-5 flex items-center gap-2.5 text-[0.68rem] font-extrabold uppercase tracking-[0.17em] text-violet;
@@ -143,4 +142,41 @@
 @keyframes shimmer {
   0% { background-position: -600px 0; }
   100% { background-position: 600px 0; }
+}
+
+/* ───────── Animações guiadas pelo scroll (discretas) ─────────
+   Só valem em navegadores com suporte a animation-timeline e para quem não pediu
+   "reduzir movimento". Sem suporte, a página simplesmente fica estática.
+   Movem apenas no eixo Y e poucos pixels, então não geram rolagem horizontal. */
+.scroll-progress { display: none; }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes drift { from { transform: translateY(var(--d)); } to { transform: translateY(calc(var(--d) * -1)); } }
+    @keyframes lift { to { transform: translateY(calc(var(--d) * -1)); } }
+    @keyframes sink { to { transform: translateY(var(--d)); } }
+    @keyframes leave { to { opacity: 0.3; transform: translateY(-28px); } }
+    @keyframes progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+    /* Intensidade (dobra a partir de tablet) */
+    .d-sm { --d: 8px; }
+    .d-md { --d: 14px; }
+    .d-lg { --d: 22px; }
+    @media (min-width: 768px) {
+      .d-sm { --d: 12px; }
+      .d-md { --d: 22px; }
+      .d-lg { --d: 34px; }
+    }
+
+    /* Elementos que atravessam a tela: acompanham a posição na viewport */
+    .drift { animation: drift linear both; animation-timeline: view(); }
+    .drift-up { animation-direction: reverse; }
+
+    /* Topo da página: acompanham o scroll da página inteira (primeira tela) */
+    .lift { animation: lift linear both; animation-timeline: scroll(root); animation-range: 0 100vh; }
+    .sink { animation: sink linear both; animation-timeline: scroll(root); animation-range: 0 100vh; }
+    .leave { animation: leave linear both; animation-timeline: scroll(root); animation-range: 0 70vh; }
+
+    .scroll-progress { display: block; animation: progress linear both; animation-timeline: scroll(root); }
+  }
 }

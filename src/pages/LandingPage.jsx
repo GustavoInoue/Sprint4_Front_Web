@@ -9,10 +9,12 @@ import Process from '../components/landing/Process'
 import Solution from '../components/landing/Solution'
 import Team from '../components/landing/Team'
 import TrySection from '../components/landing/TrySection'
+import ScrollProgress from '../components/ui/ScrollProgress'
 
 export default function LandingPage() {
   return (
     <>
+      <ScrollProgress />
       <Hero />
       <Problem />
       <Solution />

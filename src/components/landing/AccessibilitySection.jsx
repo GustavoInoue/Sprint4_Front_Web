@@ -8,7 +8,7 @@ export default function AccessibilitySection() {
   const { settings, toggleContrast, toggleDyslexia, setSize } = useAccessibility()
 
   return (
-    <section className="overflow-hidden bg-violet py-24 lg:py-36" aria-labelledby="accessibility-title">
+    <section className="overflow-clip bg-violet py-24 lg:py-36" aria-labelledby="accessibility-title">
       <div className="mx-auto grid w-[min(1180px,calc(100%-32px))] items-center gap-14 lg:grid-cols-[.9fr_1.1fr] lg:gap-16">
         <Reveal>
           <p className="eyebrow !text-lavender">Acessibilidade desde o início</p>
@@ -31,10 +31,10 @@ export default function AccessibilitySection() {
           <Phone
             src="/assets/screens/accessibility-hq.webp"
             alt="Tela de ajustes de acessibilidade do CodeCam"
-            className="relative z-[2] h-[430px] w-[199px] -rotate-[5deg] bg-[#0b0b0f] sm:absolute sm:left-9 sm:top-1/2 sm:h-[524px] sm:w-[242px] sm:-translate-y-1/2"
+            className="drift d-sm relative z-[2] h-[430px] w-[199px] -rotate-[5deg] bg-[#0b0b0f] sm:absolute sm:left-9 sm:top-1/2 sm:h-[524px] sm:w-[242px] sm:-translate-y-1/2"
             imgClassName="!object-contain"
           />
-          <div className="relative z-[3] w-full rounded-[25px] border border-white/15 bg-[#0d0c14]/90 p-6 shadow-phone backdrop-blur-xl sm:absolute sm:right-0 sm:top-1/2 sm:w-[min(330px,66%)] sm:-translate-y-[42%]">
+          <div className="drift drift-up d-md relative z-[3] w-full rounded-[25px] border border-white/15 bg-[#0d0c14]/90 p-6 shadow-phone backdrop-blur-xl sm:absolute sm:right-0 sm:top-1/2 sm:w-[min(330px,66%)] sm:-translate-y-[42%]">
             <div className="flex min-h-14 items-center justify-between text-[0.72rem]">
               <span>Contraste</span>
               <button

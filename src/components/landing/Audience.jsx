@@ -10,14 +10,14 @@ const BENEFITS = [
 
 export default function Audience() {
   return (
-    <section id="publico" className="scroll-mt-20 overflow-hidden bg-paper py-24 text-ink lg:py-36" aria-labelledby="audience-title">
+    <section id="publico" className="scroll-mt-20 overflow-clip bg-paper py-24 text-ink lg:py-36" aria-labelledby="audience-title">
       <div className="mx-auto grid w-[min(1180px,calc(100%-32px))] items-center gap-14 lg:grid-cols-2 lg:gap-24">
         <Reveal className="relative grid min-h-[520px] place-items-center lg:min-h-[630px]">
           <span className="absolute size-[min(500px,90vw)] rounded-full bg-violet" aria-hidden="true" />
-          <span className="pointer-events-none absolute left-0 top-0 select-none text-[clamp(7rem,17vw,14rem)] font-black leading-[.8] tracking-[-0.1em] text-transparent [-webkit-text-stroke:1px_rgba(9,9,13,.14)]" aria-hidden="true">
+          <span className="drift d-md pointer-events-none absolute left-0 top-0 select-none text-[clamp(7rem,17vw,14rem)] font-black leading-[.8] tracking-[-0.1em] text-transparent [-webkit-text-stroke:1px_rgba(9,9,13,.14)]" aria-hidden="true">
             FULL
           </span>
-          <span className="pointer-events-none absolute bottom-0 left-[18%] select-none text-[clamp(7rem,17vw,14rem)] font-black leading-[.8] tracking-[-0.1em] text-paper/50" aria-hidden="true">
+          <span className="drift drift-up d-md pointer-events-none absolute bottom-0 left-[18%] select-none text-[clamp(7rem,17vw,14rem)] font-black leading-[.8] tracking-[-0.1em] text-paper/50" aria-hidden="true">
             TIME
           </span>
           <div className="relative z-[2] w-[min(370px,84%)] -rotate-[4deg] rounded-[36px] bg-ink/95 p-9 text-white shadow-[0_40px_80px_rgba(27,16,70,.28)] sm:p-10">

@@ -10,10 +10,10 @@ export default function Hero() {
 
   return (
     <section id="inicio" className="grid-bg relative min-h-dvh overflow-hidden pt-32 lg:pt-[152px]" aria-labelledby="hero-title">
-      <div className="pointer-events-none absolute -right-40 top-12 size-[700px] rounded-full bg-[radial-gradient(circle,rgba(109,86,246,.23),rgba(109,86,246,.06)_35%,transparent_68%)] blur-md" aria-hidden="true" />
+      <div className="sink d-md pointer-events-none absolute -right-40 top-12 size-[700px] rounded-full bg-[radial-gradient(circle,rgba(109,86,246,.23),rgba(109,86,246,.06)_35%,transparent_68%)] blur-md" aria-hidden="true" />
 
       <div className="relative mx-auto grid w-[min(1180px,calc(100%-32px))] items-center gap-10 lg:min-h-[610px] lg:grid-cols-[.92fr_1.08fr]">
-        <div className="relative z-10 pb-6">
+        <div className="leave relative z-10 pb-6">
           <p className="eyebrow">Inteligência que acompanha seu ritmo</p>
           <h1 id="hero-title" className="max-w-[680px] text-[clamp(3.6rem,9vw,7.6rem)] font-bold">
             Da lousa ao<br /><Em>aprendizado.</Em>
@@ -39,18 +39,18 @@ export default function Hero() {
         </div>
 
         <div className="relative mx-auto h-[470px] w-full max-w-[520px] sm:h-[570px]" aria-label="Demonstração visual do aplicativo">
-          <div className="absolute right-0 top-14 size-[min(470px,90vw)] animate-orbit rounded-full border border-violet/20" aria-hidden="true" />
-          <div className="absolute right-6 top-32 size-[min(340px,66vw)] rounded-full border border-violet/10" aria-hidden="true" />
+          <div className="sink d-sm absolute right-0 top-14 size-[min(470px,90vw)] animate-orbit rounded-full border border-violet/20" aria-hidden="true" />
+          <div className="sink d-sm absolute right-6 top-32 size-[min(340px,66vw)] rounded-full border border-violet/10" aria-hidden="true" />
 
           <Phone
             src="/assets/screens/summary-hq.webp"
             alt="Resumo gerado pelo CodeCam"
-            className="absolute right-4 top-20 z-[2] h-[300px] w-[140px] rotate-[11deg] brightness-75 sm:right-0 sm:h-[424px] sm:w-[196px]"
+            className="lift d-sm absolute right-4 top-20 z-[2] h-[300px] w-[140px] rotate-[11deg] brightness-75 sm:right-0 sm:h-[424px] sm:w-[196px]"
           />
           <Phone
             src="/assets/screens/capture-hq.webp"
             alt="Tela do CodeCam fotografando uma lousa sobre fotossíntese"
-            className="absolute right-[90px] top-10 z-[3] h-[360px] w-[170px] rotate-3 sm:right-[108px] sm:h-[487px] sm:w-[225px]"
+            className="lift d-lg absolute right-[90px] top-10 z-[3] h-[360px] w-[170px] rotate-3 sm:right-[108px] sm:h-[487px] sm:w-[225px]"
           />
         </div>
       </div>
