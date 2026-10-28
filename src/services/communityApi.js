@@ -1,6 +1,9 @@
 // API da Comunidade (baralhos compartilhados).
 // - Com VITE_MOCKAPI_URL: consome o MockAPI (recurso "decks" e "mensagens").
 // - Sem a variável: "modo local" com dados iniciais salvos no navegador.
+// O MockAPI é público: tudo que entra e sai passa por validação (utils/sanitize.js).
+
+import { LIMITS, cleanCards, cleanMultiline, cleanText, isValidEmail, normalizeDeck } from '../utils/sanitize'
 
 const BASE = (import.meta.env.VITE_MOCKAPI_URL || '').replace(/\/$/, '')
 export const isRemote = Boolean(BASE)
@@ -50,11 +53,14 @@ const SEED = [
 function readLocal() {
   try {
     const raw = localStorage.getItem(LOCAL_KEY)
-    if (raw) return JSON.parse(raw)
+    if (raw) {
+      const parsed = JSON.parse(raw)
+      if (Array.isArray(parsed)) return parsed.map(normalizeDeck).filter(Boolean)
+    }
   } catch {
     /* noop */
   }
-  return SEED
+  return SEED.map(normalizeDeck).filter(Boolean)
 }
 
 function writeLocal(decks) {
@@ -65,29 +71,64 @@ function writeLocal(decks) {
   }
 }
 
+const REQUEST_TIMEOUT_MS = 10000
+const COOLDOWN_MS = 8000
+const lastAction = { publish: 0, contact: 0 }
+
+/** Evita envios em sequência (spam acidental ou automatizado). */
+function checkCooldown(kind) {
+  const wait = lastAction[kind] + COOLDOWN_MS - Date.now()
+  if (wait > 0) throw new Error(`Aguarde ${Math.ceil(wait / 1000)}s antes de enviar de novo.`)
+  lastAction[kind] = Date.now()
+}
+
 async function request(path, options) {
-  const res = await fetch(`${BASE}${path}`, {
-    headers: { 'Content-Type': 'application/json' },
-    ...options,
-  })
-  if (!res.ok) throw new Error(`Falha na API da comunidade (${res.status}).`)
-  return res.json()
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS)
+  try {
+    const res = await fetch(`${BASE}${path}`, {
+      headers: { 'Content-Type': 'application/json' },
+      signal: controller.signal,
+      ...options,
+    })
+    if (!res.ok) throw new Error(`Falha na API da comunidade (${res.status}).`)
+    return await res.json()
+  } catch (err) {
+    if (err.name === 'AbortError') throw new Error('A API da comunidade demorou demais para responder.')
+    throw err
+  } finally {
+    clearTimeout(timer)
+  }
 }
 
 export async function listDecks() {
   if (!isRemote) return readLocal()
   const decks = await request('/decks?sortBy=createdAt&order=desc')
-  return decks.map((d) => ({ ...d, cards: Array.isArray(d.cards) ? d.cards : [] }))
+  if (!Array.isArray(decks)) return []
+  return decks.map(normalizeDeck).filter(Boolean)
 }
 
-export async function publishDeck({ author, topic, description, cards }) {
-  const deck = { author, topic, description, cards, likes: 0, createdAt: new Date().toISOString() }
+export async function publishDeck(input) {
+  const topic = cleanText(input.topic, LIMITS.topic)
+  const cards = cleanCards(input.cards)
+  if (!topic || !cards.length) throw new Error('Esse baralho não tem conteúdo válido para publicar.')
+  checkCooldown('publish')
+  const deck = {
+    author: cleanText(input.author, LIMITS.author) || 'Anônimo',
+    topic,
+    description: cleanText(input.description, LIMITS.description) || `Flashcards sobre ${topic}.`,
+    cards,
+    likes: 0,
+    createdAt: new Date().toISOString(),
+  }
   if (!isRemote) {
     const created = { ...deck, id: `local-${Date.now()}` }
     writeLocal([created, ...readLocal()])
     return created
   }
-  return request('/decks', { method: 'POST', body: JSON.stringify(deck) })
+  const created = normalizeDeck(await request('/decks', { method: 'POST', body: JSON.stringify(deck) }))
+  if (!created) throw new Error('A API devolveu uma resposta inesperada.')
+  return created
 }
 
 export async function likeDeck(deck) {
@@ -97,10 +138,17 @@ export async function likeDeck(deck) {
     writeLocal(updated)
     return { ...deck, likes }
   }
-  return request(`/decks/${deck.id}`, { method: 'PUT', body: JSON.stringify({ likes }) })
+  return request(`/decks/${encodeURIComponent(deck.id)}`, { method: 'PUT', body: JSON.stringify({ likes }) })
 }
 
-export async function sendContactMessage({ name, email, message }) {
+export async function sendContactMessage(input) {
+  const name = cleanText(input.name, LIMITS.name)
+  const email = cleanText(input.email, LIMITS.email).toLowerCase()
+  const message = cleanMultiline(input.message, LIMITS.message)
+  if (name.length < 2) throw new Error('Informe seu nome.')
+  if (!isValidEmail(email)) throw new Error('Informe um e-mail válido.')
+  if (message.length < 5) throw new Error('Escreva uma mensagem um pouco maior.')
+  checkCooldown('contact')
   if (!isRemote) {
     await new Promise((resolve) => setTimeout(resolve, 600))
     return { ok: true }

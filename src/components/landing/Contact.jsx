@@ -8,7 +8,7 @@ const inputCls =
 const labelCls = 'mb-5 grid gap-2 text-[0.64rem] font-bold uppercase tracking-[0.05em] text-[#aaa6b2]'
 
 export default function Contact() {
-  const { values, status, onChange, onSubmit } = useContactForm()
+  const { values, status, errorMessage, onChange, onSubmit } = useContactForm()
 
   return (
     <section id="contato" className="relative scroll-mt-20 overflow-hidden bg-violet py-24 lg:py-[135px]" aria-labelledby="contact-title">
@@ -33,16 +33,16 @@ export default function Contact() {
             <div className="grid gap-x-5 sm:grid-cols-2">
               <label className={labelCls}>
                 Seu nome
-                <input className={inputCls} name="name" value={values.name} onChange={onChange} placeholder="Como podemos te chamar?" required />
+                <input className={inputCls} name="name" value={values.name} onChange={onChange} maxLength={80} autoComplete="name" placeholder="Como podemos te chamar?" required />
               </label>
               <label className={labelCls}>
                 Seu e-mail
-                <input className={inputCls} type="email" name="email" value={values.email} onChange={onChange} placeholder="nome@email.com" required />
+                <input className={inputCls} type="email" name="email" value={values.email} onChange={onChange} maxLength={120} autoComplete="email" placeholder="nome@email.com" required />
               </label>
             </div>
             <label className={labelCls}>
               Mensagem
-              <textarea className={inputCls} name="message" rows={5} value={values.message} onChange={onChange} placeholder="Conte um pouco sobre o que gostaria de saber..." required />
+              <textarea className={inputCls} name="message" rows={5} value={values.message} onChange={onChange} maxLength={1000} placeholder="Conte um pouco sobre o que gostaria de saber..." required />
             </label>
             <div className="flex flex-wrap items-center gap-4">
               <button type="submit" disabled={status === 'sending'} className="btn btn-light">
@@ -58,7 +58,7 @@ export default function Contact() {
                   <span className="grid size-6 place-items-center rounded-full bg-lime text-xs text-ink" aria-hidden="true">✓</span> Sua mensagem foi enviada!
                 </p>
               )}
-              {status === 'error' && <p className="text-danger">Não foi possível enviar agora. Tente novamente.</p>}
+              {status === 'error' && <p className="text-danger">{errorMessage || 'Não foi possível enviar agora. Tente novamente.'}</p>}
             </div>
           </form>
         </Reveal>

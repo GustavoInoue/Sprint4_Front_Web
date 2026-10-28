@@ -29,16 +29,17 @@ export default function AuthForm({ mode, onSubmit }) {
       {isRegister && (
         <div>
           <label className="label" htmlFor="name">Nome</label>
-          <input id="name" name="name" className="field" autoComplete="name" value={values.name} onChange={onChange} placeholder="Seu nome" required />
+          <input id="name" name="name" className="field" autoComplete="name" value={values.name} onChange={onChange} placeholder="Seu nome" required maxLength={80} />
         </div>
       )}
       <div>
         <label className="label" htmlFor="email">E-mail</label>
-        <input id="email" name="email" type="email" className="field" autoComplete="email" value={values.email} onChange={onChange} placeholder="nome@email.com" required />
+        <input id="email" name="email" type="email" className="field" autoComplete="email" value={values.email} onChange={onChange} placeholder="nome@email.com" required maxLength={120} />
       </div>
       <div>
         <label className="label" htmlFor="password">Senha</label>
-        <input id="password" name="password" type="password" className="field" autoComplete={isRegister ? 'new-password' : 'current-password'} value={values.password} onChange={onChange} placeholder="••••••••" required minLength={isRegister ? 6 : undefined} />
+        <input id="password" name="password" type="password" className="field" autoComplete={isRegister ? 'new-password' : 'current-password'} value={values.password} onChange={onChange} placeholder="••••••••" required minLength={isRegister ? 8 : undefined} maxLength={128} />
+        {isRegister && <p className="mt-2 text-xs text-muted">Use pelo menos 8 caracteres. Evite senhas que você usa em outros sites.</p>}
       </div>
       {error && (
         <p role="alert" className="rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger">{error}</p>

@@ -5,8 +5,8 @@
 O **CodeCam** transforma o conteúdo de uma aula em material de estudo: **resumos**, **tópicos** e **flashcards**.
 Esta entrega é a **evolução do projeto da Sprint 3**: a Landing Page (HTML/CSS) foi migrada para **React + Tailwind CSS** e integrada ao aplicativo web (geração de resumos e flashcards a partir da API da Wikipédia), agora com **autenticação, rotas públicas e privadas, hooks customizados e consumo de APIs**.
 
-- **Repositório Git:** `COLE_AQUI_O_LINK_DO_REPOSITORIO`
-- **Deploy (Vercel):** `COLE_AQUI_O_LINK_DA_VERCEL`
+- **Repositório Git:** [github.com/GustavoInoue/Sprint4_Front_Web](https://github.com/GustavoInoue/Sprint4_Front_Web)
+- **Deploy (Vercel):** [sprint4-front-web-alpha.vercel.app](https://sprint4-front-web-alpha.vercel.app)
 
 ---
 
@@ -76,19 +76,56 @@ npm run preview
 
 Não há back-end próprio. Tudo roda no navegador e consome APIs externas. **Não é necessário subir nenhum servidor**, além do `npm run dev`.
 
-## Variáveis de ambiente (opcionais)
+## Variáveis de ambiente (opcionais) e MockAPI
 
-O projeto **funciona sem nenhuma variável** e a API da Wikipédia **não exige chave**. Só se quiser conectar a Comunidade e o formulário de contato a um MockAPI, copie `.env.example` para `.env`:
+O projeto **funciona sem nenhuma variável** e a API da Wikipédia **não exige chave**. A única variável é a do MockAPI, que deixa a página **Comunidade** e o **formulário de contato** online:
+
+| Variável | Para quê |
+| --- | --- |
+| `VITE_MOCKAPI_URL` | URL base do projeto no MockAPI, sem barra no final. Sem ela, o app roda em **modo local**. |
+
+### Modo local x modo online
+
+| | Modo local (sem a variável) | Modo online (com `VITE_MOCKAPI_URL`) |
+| --- | --- | --- |
+| Comunidade | Baralhos de exemplo + os que você publicar, salvos só no seu navegador | Baralhos compartilhados por todos, salvos no MockAPI |
+| Contato | Simulado, nada é enviado | Mensagem gravada no MockAPI |
+| Selo na página Comunidade | "Modo local (sem MockAPI)" | "Conectado ao MockAPI" |
+
+### Como configurar o MockAPI
+
+1. Crie um projeto em [mockapi.io](https://mockapi.io) e **dois recursos**: `decks` e `mensagens`.
+2. Campos de `decks`: `author` (String), `topic` (String), `description` (String), `likes` (Number), `createdAt` (String) e `cards` (Array/Object).
+3. Campos de `mensagens`: `name`, `email`, `message` e `createdAt` (todos String).
+4. Copie a URL base do projeto (ex.: `https://xxxxxxxx.mockapi.io`; se o projeto tiver *API prefix*, inclua o prefixo, ex.: `.../api/v1`).
+5. **Local:** copie `.env.example` para `.env`, preencha `VITE_MOCKAPI_URL` e reinicie o `npm run dev`.
 
 ```bash
 cp .env.example .env
 ```
 
-| Variável | Para quê |
-| --- | --- |
-| `VITE_MOCKAPI_URL` | URL base do seu MockAPI. Sem ela, a Comunidade e o contato funcionam em modo local. |
+6. **Vercel:** em *Settings → Environments → Production* (ou *Environment Variables*), crie `VITE_MOCKAPI_URL` como variável comum (não "Sensitive"), salve e faça **Redeploy** em *Deployments*. A variável é embutida no build, então sem novo deploy ela não vale.
 
-> Reinicie o `npm run dev` após alterar o `.env`. Na Vercel, cadastre a variável em *Settings → Environment Variables*.
+> O `.env` está no `.gitignore` e **não** vai para o GitHub. Quem clonar o repositório vê o modo local, a menos que configure a própria variável.
+
+## Segurança
+
+Este projeto é **só front-end** e acadêmico. O que foi feito e o que fica de fora:
+
+| Tema | O que existe |
+| --- | --- |
+| Cabeçalhos HTTP (`vercel.json`) | CSP restrita (só o próprio site, Wikipédia, MockAPI e Google Fonts), `X-Frame-Options: DENY`, `nosniff`, `Referrer-Policy`, `Permissions-Policy`, HSTS e COOP |
+| Senhas | PBKDF2-SHA256 com salt aleatório e 200 mil iterações; contas antigas (SHA-256) são migradas no primeiro login |
+| Cadastro e login | Mínimo de 8 caracteres, bloqueio de senhas fracas comuns e bloqueio temporário após 5 tentativas erradas |
+| Dados da API | Tudo que vem do MockAPI é validado e limpo antes de aparecer; textos são limitados em tamanho; conteúdo é sempre exibido como texto (sem `innerHTML`) |
+| Envios | Validação de campos, limites de tamanho, intervalo mínimo entre publicações/mensagens e timeout nas requisições |
+| Segredos | `.env` fora do Git; não há chaves privadas no projeto |
+
+**Limitações assumidas** (exigiriam um back-end):
+
+- O login é **simulado**: usuários e sessão ficam no `localStorage`, então quem controla o navegador controla esses dados.
+- O **MockAPI é público**: quem souber a URL consegue ler e gravar em `decks` e `mensagens`. Por isso nada sensível deve ser salvo lá.
+- A conta de teste (`demo@codecam.com`) é pública de propósito para a avaliação. Nunca reutilize nela uma senha real.
 
 ## Usuários e senhas para teste
 
@@ -96,7 +133,7 @@ cp .env.example .env
 | --- | --- | --- |
 | Conta de teste | `demo@codecam.com` | `codecam123` |
 
-Também é possível criar uma conta em **/registrar** (autenticação simulada, salva no navegador com senha em hash SHA-256).
+Também é possível criar uma conta em **/registrar** (autenticação simulada, salva no navegador com senha em hash PBKDF2 + salt; mínimo de 8 caracteres).
 
 ## Mapa de rotas
 

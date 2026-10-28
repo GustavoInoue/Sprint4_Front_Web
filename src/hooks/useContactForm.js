@@ -7,6 +7,7 @@ const EMPTY = { name: '', email: '', message: '' }
 export default function useContactForm() {
   const [values, setValues] = useState(EMPTY)
   const [status, setStatus] = useState('idle') // idle | sending | success | error
+  const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
     if (status !== 'success') return undefined
@@ -19,14 +20,16 @@ export default function useContactForm() {
   async function onSubmit(e) {
     e.preventDefault()
     setStatus('sending')
+    setErrorMessage('')
     try {
       await sendContactMessage(values)
       setValues(EMPTY)
       setStatus('success')
-    } catch {
+    } catch (err) {
+      setErrorMessage(err.message)
       setStatus('error')
     }
   }
 
-  return { values, status, onChange, onSubmit }
+  return { values, status, errorMessage, onChange, onSubmit }
 }
